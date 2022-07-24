@@ -4,7 +4,7 @@ import AdminLayout from '../../../components/layout/admin'
 
 type Props = {}
 
-const Users = (props: Props) => {
+const Categories = (props: Props) => {
     return (
         <div className="">
             <AdminLayout> </AdminLayout>
@@ -12,9 +12,9 @@ const Users = (props: Props) => {
                 <div className="px-6 py-8">
                     <div className="max-w-4xl mx-auto">
                         <div className="overflow-x-auto relative shadow-md sm:rounded-lg ">
-                        <Link href="users/create">
+                            <Link href="categories/create">
                                 <button className="text-base mb-5 font-bold leading-none">
-                                    <span className="text-blue-500">Create user</span>
+                                    <span className="text-blue-500">Create category</span>
                                 </button>
                             </Link>
                             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -24,10 +24,10 @@ const Users = (props: Props) => {
                                             ID
                                         </th>
                                         <th scope="col" className="py-3 px-6">
-                                            Name
+                                            Image
                                         </th>
                                         <th scope="col" className="py-3 px-6">
-                                            Phone
+                                            Name
                                         </th>
                                         <th scope="col" className="py-3 px-6">
                                             Status
@@ -44,13 +44,11 @@ const Users = (props: Props) => {
                                         </td>
                                         <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                                             <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" />
-                                            <div className="pl-3">
-                                                <div className="text-base font-semibold">Neil Sims</div>
-                                                <div className="font-normal text-gray-500">neil.sims@flowbite.com</div>
-                                            </div>
                                         </th>
                                         <td className="py-4 px-6">
-                                            React Developer
+                                            <div className="">
+                                                <div className="text-base font-semibold">Neil Sims</div>
+                                            </div>
                                         </td>
                                         <td className="py-4 px-6">
                                             <div className="flex items-center">
@@ -58,7 +56,7 @@ const Users = (props: Props) => {
                                             </div>
                                         </td>
                                         <td className="py-4 px-6">
-                                            <Link href="users/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
+                                            <Link href="categories/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
                                             <button className="font-medium text-red-600 dark:text-red-500 hover:underline ml-5">Delete </button>
                                         </td>
                                     </tr>
@@ -68,13 +66,11 @@ const Users = (props: Props) => {
                                         </td>
                                         <th scope="row" className="flex items-center py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-4.jpg" />
-                                            <div className="pl-3">
-                                                <div className="text-base font-semibold">Leslie Livingston</div>
-                                                <div className="font-normal text-gray-500">leslie@flowbite.com</div>
-                                            </div>
                                         </th>
                                         <td className="py-4 px-6">
-                                            SEO Specialist
+                                            <div className="">
+                                                <div className="text-base font-semibold">Neil Sims</div>
+                                            </div>
                                         </td>
                                         <td className="py-4 px-6">
                                             <div className="flex items-center">
@@ -82,7 +78,7 @@ const Users = (props: Props) => {
                                             </div>
                                         </td>
                                         <td className="py-4 px-6">
-                                            <Link href="users/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
+                                            <Link href="categories/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
                                             <button className="font-medium text-red-600 dark:text-red-500 hover:underline ml-5">Delete </button>
                                         </td>
                                     </tr>
@@ -97,4 +93,4 @@ const Users = (props: Props) => {
     )
 }
 
-export default Users
+export default Categories
