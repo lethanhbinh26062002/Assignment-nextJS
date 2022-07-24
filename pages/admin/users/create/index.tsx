@@ -56,12 +56,11 @@ const CreateUser = (props: Props) => {
                                             </div>
                                         </div>
                                         <div className="flex justify-end mt-6">
-                                            <button className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Save</button>
+                                            <button className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Create</button>
                                         </div>
                                     </form>
                                 </section>
                             </div>
-
                         </div>
                     </div>
                 </div>
