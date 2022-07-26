@@ -34,6 +34,9 @@ const Product = (props: Props) => {
                                                 Name
                                             </th>
                                             <th scope="col" className="py-3 px-6">
+                                                Price
+                                            </th>
+                                            <th scope="col" className="py-3 px-6">
                                                 Status
                                             </th>
                                             <th scope="col" className="py-3 px-6">
@@ -52,6 +55,11 @@ const Product = (props: Props) => {
                                             <td className="py-4 px-6">
                                                 <div className="">
                                                     <div className="text-base font-semibold">Neil Sims</div>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-6">
+                                                <div className="">
+                                                    <div className="text-base font-semibold">125000 VNĐ</div>
                                                 </div>
                                             </td>
                                             <td className="py-4 px-6">
@@ -87,6 +95,11 @@ const Product = (props: Props) => {
                                             <td className="py-4 px-6">
                                                 <div className="">
                                                     <div className="text-base font-semibold">Neil Sims</div>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-6">
+                                                <div className="">
+                                                    <div className="text-base font-semibold">120000 VNĐ</div>
                                                 </div>
                                             </td>
                                             <td className="py-4 px-6">
