@@ -8,6 +8,9 @@ const Product = (props: Props) => {
     return (
         <div>
             <div className="">
+                <link
+                    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+                    rel="stylesheet"></link>
                 <AdminLayout> </AdminLayout>
                 <main className="ml-60 pt-16 max-h-screen overflow-auto">
                     <div className="px-6 py-8">
@@ -57,8 +60,21 @@ const Product = (props: Props) => {
                                                 </div>
                                             </td>
                                             <td className="py-4 px-6">
-                                                <Link href="products/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
-                                                <button className="font-medium text-red-600 dark:text-red-500 hover:underline ml-5">Delete </button>
+                                                <div>
+                                                    <Link href="products/1">
+                                                        <button className="text-gray-400 hover:text-gray-100 mr-2">
+                                                            <i className="material-icons-outlined text-base">visibility</i>
+                                                        </button>
+                                                    </Link>
+                                                    <Link href="products/edit">
+                                                        <button className="text-gray-400 hover:text-blue-500 mx-2">
+                                                            <i className="material-icons-outlined text-base">edit</i>
+                                                        </button>
+                                                    </Link>
+                                                    <button className="text-gray-400 hover:text-red-500 ml-2">
+                                                        <i className="material-icons-round text-base">delete_outline</i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -79,8 +95,21 @@ const Product = (props: Props) => {
                                                 </div>
                                             </td>
                                             <td className="py-4 px-6">
-                                                <Link href="products/edit"><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button></Link>
-                                                <button className="font-medium text-red-600 dark:text-red-500 hover:underline ml-5">Delete </button>
+                                                <div>
+                                                    <Link href="products/1">
+                                                        <button className="text-gray-400 hover:text-gray-100 mr-2">
+                                                            <i className="material-icons-outlined text-base">visibility</i>
+                                                        </button>
+                                                    </Link>
+                                                    <Link href="products/edit">
+                                                        <button className="text-gray-400 hover:text-blue-500 mx-2">
+                                                            <i className="material-icons-outlined text-base">edit</i>
+                                                        </button>
+                                                    </Link>
+                                                    <button className="text-gray-400 hover:text-red-500 ml-2">
+                                                        <i className="material-icons-round text-base">delete_outline</i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
