@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler,useForm } from 'react-hook-form';
 import { list } from '../../../../api/category';
-import { create } from '../../../../api/products';
 import AdminLayout from '../../../../components/layout/admin'
+import { useProduct } from '../../../../hooks/useProduct';
 
 type Props = {}
 
@@ -11,6 +11,7 @@ const CreateProduct = (props: Props) => {
     const router = useRouter();
     const [categorys, setCategorys] = useState<any[]>([]);
     const {register,handleSubmit,formState:errors} = useForm();
+    const {createProduct} = useProduct();
     useEffect(() => {
         (async () => {
             const { data } = await list();
@@ -18,7 +19,7 @@ const CreateProduct = (props: Props) => {
         })()
     }, [])
     const onSubmit:SubmitHandler<any> =  async(data)=>{
-        const {data :product} = await create(data);
+        await createProduct(data)
         router.push('/admin/products');
     }
     return (
@@ -42,8 +43,8 @@ const CreateProduct = (props: Props) => {
                                                 <input {...register('price',{required:true})} id="price" type="number" min="0" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                             </div>
                                             <div>
-                                                <label className="text-white dark:text-gray-200" htmlFor="username">Writing master</label>
-                                                <input {...register('writing',{required:true})} id="writing" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                                <label className="text-white dark:text-gray-200" htmlFor="username">Author</label>
+                                                <input {...register('Writing_master',{required:true})} id="writing" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                             </div>
                                             <div>
                                                 <label className="text-white dark:text-gray-200" htmlFor="passwordConfirmation">Description</label>
@@ -55,6 +56,7 @@ const CreateProduct = (props: Props) => {
                                                     {categorys?.map(item => 
                                                         <option key={item._id} value={item._id}>{item.name}</option>  
                                                     )}
+                                                <option value="62e2a10c012bf1e1aaa2fd83">Abc</option>
                                                 </select>
                                             </div>
                                             <div>
@@ -62,23 +64,6 @@ const CreateProduct = (props: Props) => {
                                                     Image
                                                 </label>
                                                 <input {...register('image',{required:true})} id="writing" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
-                                                {/* <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                                    <div className="space-y-1 text-center">
-                                                        <svg className="mx-auto h-12 w-12 text-white" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                                                        </svg>
-                                                        <div className="flex text-sm text-gray-600">
-                                                            <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                                                <span className="">Upload a file</span>
-                                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                                                            </label>
-                                                            <p className="pl-1 text-white">or drag and drop</p>
-                                                        </div>
-                                                        <p className="text-xs text-white">
-                                                            PNG, JPG, GIF up to 10MB
-                                                        </p>
-                                                    </div>
-                                                </div> */}
                                             </div>
                                         </div>
                                         <div className="flex justify-end mt-6">
