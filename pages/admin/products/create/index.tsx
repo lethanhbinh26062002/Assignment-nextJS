@@ -14,7 +14,7 @@ const CreateProduct = (props: Props) => {
     const {createProduct} = useProduct();
     useEffect(() => {
         (async () => {
-            const { data } = await list();
+            const data = await list();
             setCategorys(data)
         })()
     }, [])
@@ -56,7 +56,6 @@ const CreateProduct = (props: Props) => {
                                                     {categorys?.map(item => 
                                                         <option key={item._id} value={item._id}>{item.name}</option>  
                                                     )}
-                                                <option value="62e2a10c012bf1e1aaa2fd83">Abc</option>
                                                 </select>
                                             </div>
                                             <div>
