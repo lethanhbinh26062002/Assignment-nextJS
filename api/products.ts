@@ -14,5 +14,5 @@ export const read = async(id :String)=>{
     return instance.get(`products/${id}`)
 }
 export const update = async(product :productType)=>{
-    return instance.put(`products/${product._id}`,product)
+    return instance.patch(`products/${product._id}`,product)
 }

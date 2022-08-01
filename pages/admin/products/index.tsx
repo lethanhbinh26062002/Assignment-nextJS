@@ -83,7 +83,7 @@ const Product = () => {
                                                                 <i className="material-icons-outlined text-base">visibility</i>
                                                             </button>
                                                         </Link>
-                                                        <Link href="products/edit/${item._id}">
+                                                        <Link href={`/admin/products/edit/${item._id}`}>
                                                             <button className="text-gray-400 hover:text-blue-500 mx-2">
                                                                 <i className="material-icons-outlined text-base">edit</i>
                                                             </button>
