@@ -2,12 +2,15 @@ import Link from 'next/link'
 import React from 'react'
 import AdminLayout from '../../../components/layout/admin'
 import { useProduct } from '../../../hooks/useProduct'
-import { productType } from '../../../models/product'
 
-type Props = {}
-
-const Product = (props: Props) => {
+const Product = () => {
     const { data: products, error ,removePro} = useProduct();
+    const handlerRemve =(_id: String)=>{
+        let result = confirm("Bạn có muốn xoá không ?");
+        if(result){
+            removePro(_id)
+        }
+    }
     if (!products) return <div>Loading...</div>
     if (error) return <div>Error : {error}</div>
     return (
@@ -76,16 +79,16 @@ const Product = (props: Props) => {
                                                 <td className="py-4 px-6">
                                                     <div>
                                                         <Link href="products/1">
-                                                            <button onClick={()=> removePro(item._id)} className="text-gray-400 hover:text-gray-100 mr-2">
+                                                            <button className="text-gray-400 hover:text-gray-100 mr-2">
                                                                 <i className="material-icons-outlined text-base">visibility</i>
                                                             </button>
                                                         </Link>
-                                                        <Link href="products/edit">
+                                                        <Link href="products/edit/${item._id}">
                                                             <button className="text-gray-400 hover:text-blue-500 mx-2">
                                                                 <i className="material-icons-outlined text-base">edit</i>
                                                             </button>
                                                         </Link>
-                                                        <button className="text-gray-400 hover:text-red-500 ml-2">
+                                                        <button onClick={()=> handlerRemve(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
                                                             <i className="material-icons-round text-base">delete_outline</i>
                                                         </button>
                                                     </div>
