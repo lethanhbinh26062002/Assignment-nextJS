@@ -1,10 +1,18 @@
 import Link from 'next/link'
 import React from 'react'
 import AdminLayout from '../../../components/layout/admin'
+import { useCategory } from '../../../hooks/useCategory'
 
 type Props = {}
 
 const Categories = (props: Props) => {
+    const { data: categorys, error, removeCate } = useCategory();
+    const handlerRemove = (_id:String) =>{
+        let result = confirm("Bạn có muốn xoá không ?")
+        if(result) removeCate(_id)
+    }
+    if (error) return <div>Fali : {error}</div>
+    if (!categorys) return <div>Loading...</div>
     return (
         <div className="">
             <link
@@ -41,76 +49,46 @@ const Categories = (props: Props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="p-4 w-4">
-                                            1
-                                        </td>
-                                        <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" />
-                                        </th>
-                                        <td className="py-4 px-6">
-                                            <div className="">
-                                                <div className="text-base font-semibold">Neil Sims</div>
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div className="flex items-center">
-                                                <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div>
-                                                <Link href="categories/1">
-                                                    <button className="text-gray-400 hover:text-gray-100 mr-2">
-                                                        <i className="material-icons-outlined text-base">visibility</i>
-                                                    </button>
-                                                </Link>
-                                                <Link href="categories/edit">
-                                                    <button className="text-gray-400 hover:text-blue-500 mx-2">
-                                                        <i className="material-icons-outlined text-base">edit</i>
-                                                    </button>
-                                                </Link>
-                                                <button className="text-gray-400 hover:text-red-500 ml-2">
-                                                    <i className="material-icons-round text-base">delete_outline</i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="p-4 w-4">
-                                            5
-                                        </td>
-                                        <th scope="row" className="flex items-center py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-4.jpg" />
-                                        </th>
-                                        <td className="py-4 px-6">
-                                            <div className="">
-                                                <div className="text-base font-semibold">Neil Sims</div>
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div className="flex items-center">
-                                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2" /> OFF
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div>
-                                                <Link href="categories/1">
-                                                    <button className="text-gray-400 hover:text-gray-100 mr-2">
-                                                        <i className="material-icons-outlined text-base">visibility</i>
-                                                    </button>
-                                                </Link>
-                                                <Link href="categories/edit">
-                                                    <button className="text-gray-400 hover:text-blue-500 mx-2">
-                                                        <i className="material-icons-outlined text-base">edit</i>
-                                                    </button>
-                                                </Link>
-                                                <button className="text-gray-400 hover:text-red-500 ml-2">
-                                                    <i className="material-icons-round text-base">delete_outline</i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    {categorys?.map((item: any, index: any) => {
+                                        return (
+                                            <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                <td className="p-4 w-4">
+                                                    {index + 1}
+                                                </td>
+                                                <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+                                                    <img className="w-10 h-10 rounded-full" src={item.image} />
+                                                </th>
+                                                <td className="py-4 px-6">
+                                                    <div className="">
+                                                        <div className="text-base font-semibold">{item.name}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="flex items-center">
+                                                        <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div>
+                                                        <Link href="categories/1">
+                                                            <button className="text-gray-400 hover:text-gray-100 mr-2">
+                                                                <i className="material-icons-outlined text-base">visibility</i>
+                                                            </button>
+                                                        </Link>
+                                                        <Link href={`/admin/categories/edit/${item._id}`}>
+                                                            <button className="text-gray-400 hover:text-blue-500 mx-2">
+                                                                <i className="material-icons-outlined text-base">edit</i>
+                                                            </button>
+                                                        </Link>
+                                                        <button onClick={() =>handlerRemove(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
+                                                            <i className="material-icons-round text-base">delete_outline</i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+
                                 </tbody>
                             </table>
                         </div>
