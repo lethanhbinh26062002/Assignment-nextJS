@@ -12,11 +12,11 @@ type DetailProps = {
 
 const Detail = () => {
     const router = useRouter()
-    const {id} = router.query
-    const {data, error} =  useSWR(id ? `/products/${id}` : <div>error</div>)
+    const { id } = router.query
+    const { data, error } = useSWR(id ? `/products/${id}` : <div>error</div>)
     if (!data) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
-    
+
     return (
         <div>
             <main id="main" className="container">
@@ -43,7 +43,7 @@ const Detail = () => {
                                 </h3>
                                 <div className="flex items-center gap-8">
                                     <span className="text-base lg:text-2xl text-pink-400 text-center font-bold">
-                                        {data.price}
+                                        {data.price} VNĐ
                                     </span>
                                     {/* <a><span className="opacity-80">
                                         Có 0 phản hồi cho sản phẩm này
@@ -51,7 +51,12 @@ const Detail = () => {
                                     <span>{data.description}</span>
                                 </div>
                             </div>
-                            <div className="border-y border-solid border-gray-300 py-4">
+                            <div className="border-y border-solid border-gray-300 py-4 grid grid-cols-4 gap-2">
+                                <div className='py-3 '>
+                                    <div className="relative flex flex-row h-8 ">
+                                        <input type="number" defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
+                                    </div>
+                                </div>
                                 <button className="bg-pink-300 text-white p-4 rounded-sm">
                                     <i className="fa-solid fa-cart-shopping" />
                                     <span className="uppercase">Đặt hàng nhanh</span>
@@ -199,32 +204,5 @@ const Detail = () => {
     )
 }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//     const data = await (await fetch(` http://localhost:3002/products`)).json()
-//     const paths = data.map((item:any) => {
-//         return { params: { id: item.id } }
-//     })
-//     return {
-//         paths,
-//         fallback: false
-//     }
-// }
-
-// export const getStaticProps: GetStaticProps<DetailProps> = async (
-//     context: GetStaticPropsContext
-// ) => {
-//     //call api
-//     const data = await (await fetch(` http://localhost:3002/products/${context.params?.id}`)).json()
-//     if (!data) {
-//         return {
-//             notFound: true
-//         }
-//     }
-//     return {
-//         props:{
-//             product:data
-//         }
-//     }
-// }
 
 export default Detail
