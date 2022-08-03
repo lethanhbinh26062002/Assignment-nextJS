@@ -4,16 +4,22 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import "swiper/css"
 import "swiper/css/pagination"
 import Header from '../../components/Header'
+import { ProductType } from '../../types/ProductType'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
 
-type Props = {}
+type DetailProps = {
+    product: any
+}
 
-const Detail = (props: Props) => {
+const Detail = () => {
+    
     return (
         <div>
-            <Header />
             <main id="main" className="container">
                 <div className="bg-white bg-center text-2xl md:text-[38px] uppercase text-pink-400 text-center mb-6 py-10">
-                    SON YSL ROUGE PUR COUTURE THE SLIM
+                   
                 </div>
 
                 <div className="container">
@@ -21,20 +27,20 @@ const Detail = (props: Props) => {
                         <div className="w-full lg:w-[40%] flex">
                             <div className="flex flex-wrap md:flex-nowrap gap-3 mb-4">
                                 <div className="w-full lg:w-[80%]">
-                                    <img src="https://shopsonmoi.vn/assets/uploads/files/76479-screen-shot-2019-03-24-at-11.31.35-pm.png" alt className="p-4 border border-solid border-gray-900 object-cover" />
+                                    <img src="" className="p-4 border border-solid border-gray-900 object-cover" />
                                 </div>
                                 <div className="w-[20%]">
-                                    <img src="https://shopsonmoi.vn/assets/uploads/files/76479-screen-shot-2019-03-24-at-11.31.35-pm.png" alt className="p-2 border border-solid border-gray-900 object-cover" />
+                                    <img src="" className="p-2 border border-solid border-gray-900 object-cover" />
                                 </div>
                             </div>
                         </div>
                         <div className="w-full lg:w-[60%]">
                             <div className="mb-10">
                                 <h3 className="text-xl lg:text-3xl mb-2">
-                                    Son YSL Rouge Pur Couture The Slim
+                                    ""
                                 </h3>
                                 <div className="flex items-center gap-8">
-                                    <span className="text-base lg:text-2xl text-pink-400 text-center font-bold">899.000đ</span>
+                                    <span className="text-base lg:text-2xl text-pink-400 text-center font-bold"></span>
                                     <a><span className="opacity-80">
                                         Có 0 phản hồi cho sản phẩm này
                                     </span></a>
@@ -185,9 +191,35 @@ const Detail = (props: Props) => {
                 </div>
             </main>
         </div>
-
-
     )
 }
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+//     const data = await (await fetch(` http://localhost:3002/products`)).json()
+//     const paths = data.map((item:any) => {
+//         return { params: { id: item.id } }
+//     })
+//     return {
+//         paths,
+//         fallback: false
+//     }
+// }
+
+// export const getStaticProps: GetStaticProps<DetailProps> = async (
+//     context: GetStaticPropsContext
+// ) => {
+//     //call api
+//     const data = await (await fetch(` http://localhost:3002/products/${context.params?.id}`)).json()
+//     if (!data) {
+//         return {
+//             notFound: true
+//         }
+//     }
+//     return {
+//         props:{
+//             product:data
+//         }
+//     }
+// }
 
 export default Detail

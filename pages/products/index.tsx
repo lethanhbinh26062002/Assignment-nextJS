@@ -1,5 +1,14 @@
+import Link from 'next/link';
 import React from 'react'
+import useProducts from '../../hooks/product';
+import { ProductType } from '../../types/ProductType';
+
+
 const ProductPage = () => {
+    const { data, error } = useProducts();
+    if (error) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>
+    
     return (
         <div className='w-[90%] mx-auto'>
             <div className='search flex justify-between items-end'>
@@ -50,43 +59,32 @@ const ProductPage = () => {
                 <div className="bg-white">
                     <div className="w-full mx-auto lg:w-full">
                         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-3 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                            <div className="group relative">
-                                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
-                                </div>
-                                <div className="mt-4 flex justify-between">
-                                    <div>
-                                        <h3 className="text-sm text-gray-700">
-                                            <a href="#">
-                                                <span aria-hidden="true" className="absolute inset-0" />
-                                                Basic Tee
-                                            </a>
-                                        </h3>
-                                        <p className="mt-1 text-sm text-gray-500">Black</p>
-                                    </div>
-                                    <p className="text-sm font-medium text-gray-900">$35</p>
-                                </div>
-                            </div>
                             {/* product */}
-                            <div className="group relative">
-                                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
-                                </div>
-                                <div className="mt-4 flex justify-between">
-                                    <div>
-                                        <h3 className="text-sm text-gray-700">
-                                            <a href="#">
-                                                <span aria-hidden="true" className="absolute inset-0" />
-                                                Basic Tee
-                                            </a>
-                                        </h3>
-                                        <p className="mt-1 text-sm text-gray-500">Black</p>
+                            {data.map((item:any) => {
+                                return (
+                                    <div key={item.id} className="group relative">
+                                        <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                                            <img src={item.image} alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
+                                        </div>
+                                        <div className="mt-4 flex justify-between">
+                                            <div>
+                                                <h3 className="text-sm text-gray-700">
+                                                    <a href={`/products/${item.id}`}>
+                                                        <span aria-hidden="true" className="absolute inset-0" />
+                                                        {item.name}
+                                                    </a>
+                                                </h3>
+                                                <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                                            </div>
+                                            <p className="text-sm font-medium text-gray-900">{item.price}</p>
+                                        </div>
                                     </div>
-                                    <p className="text-sm font-medium text-gray-900">$35</p>
-                                </div>
-                            </div>
+                                )
+                                }  
+                            )}
+
                             {/* product */}
-                            <div className="group relative">
+                            {/* <div className="group relative">
                                 <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                     <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
                                 </div>
@@ -102,9 +100,9 @@ const ProductPage = () => {
                                     </div>
                                     <p className="text-sm font-medium text-gray-900">$35</p>
                                 </div>
-                            </div>
+                            </div> */}
                             {/* product */}
-                            <div className="group relative">
+                            {/* <div className="group relative">
                                 <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                     <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
                                 </div>
@@ -120,7 +118,25 @@ const ProductPage = () => {
                                     </div>
                                     <p className="text-sm font-medium text-gray-900">$35</p>
                                 </div>
-                            </div>
+                            </div> */}
+                            {/* product */}
+                            {/* <div className="group relative">
+                                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                                    <img src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg" alt="Front of men's Basic Tee in black." className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
+                                </div>
+                                <div className="mt-4 flex justify-between">
+                                    <div>
+                                        <h3 className="text-sm text-gray-700">
+                                            <a href="#">
+                                                <span aria-hidden="true" className="absolute inset-0" />
+                                                Basic Tee
+                                            </a>
+                                        </h3>
+                                        <p className="mt-1 text-sm text-gray-500">Black</p>
+                                    </div>
+                                    <p className="text-sm font-medium text-gray-900">$35</p>
+                                </div>
+                            </div> */}
                             {/* More products... */}
                         </div>
                     </div>
