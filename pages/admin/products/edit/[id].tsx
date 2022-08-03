@@ -15,21 +15,21 @@ const EditProducts = (props: Props) => {
     const router = useRouter();
     const { updateProduct } = useProduct();
     const { id } = router.query
-    const { data, error } = useSWR(id ? `/products/${id}` : null);
+    // const { data, error } = useSWR(id ? `/products/${id}` : null);
     useEffect(() => {
         (async () => {
+            const data = await read(id)
             const listCate = await list();
             setCategorys(listCate)
+            reset(data)
         })()
-        console.log();
-        reset(data)
     }, [id])
     const onSubmit: SubmitHandler<productType> = async (data: productType) => {
         await updateProduct(data);
         router.push('/admin/products')
     }
-    if (!data) return <div>Loading...</div>
-    if (error) return <div>Error : {error}</div>
+    // if (!data) return <div>Loading...</div>
+    // if (error) return <div>Error : {error}</div>
     return (
         <div>
             <AdminLayout> </AdminLayout>

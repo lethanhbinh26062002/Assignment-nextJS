@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { create, remmove, update } from "../api/products";
+import { create, read, remmove, update } from "../api/products";
 import { productType } from "../models/product";
 
 export const useProduct = () => {
@@ -20,11 +20,20 @@ export const useProduct = () => {
         const newProductList = data.filter((item: any) => item._id !== product._id);
         mutate(newProductList);
     }
+    const updateStatus = async (_id: string, status: number) =>{
+        const product = await read(_id);
+        product.status = status
+        const dataUpdate = await update(product);
+        console.log(product);
+        const newProductList = data.map(item => item._id === product._id ? product : item)
+        mutate(newProductList)
+    }
     return {
         data,
         error,
         createProduct,
         removePro,
-        updateProduct
+        updateProduct,
+        updateStatus
     }
 }

@@ -11,6 +11,7 @@ type Props = {}
 const EditCategory = (props: Props) => {
     const router = useRouter();
     const { id } = router.query;
+    console.log(id);
     const { register, formState: errors, reset, handleSubmit } = useForm();
     const { updateCate } = useCategory();
     useEffect(() => {

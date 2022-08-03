@@ -6,10 +6,13 @@ import { useCategory } from '../../../hooks/useCategory'
 type Props = {}
 
 const Categories = (props: Props) => {
-    const { data: categorys, error, removeCate } = useCategory();
-    const handlerRemove = (_id:String) =>{
+    const { data: categorys, error, removeCate,updateStatus} = useCategory();
+    const handlerRemove = (_id: String) => {
         let result = confirm("Bạn có muốn xoá không ?")
-        if(result) removeCate(_id)
+        if (result) removeCate(_id)
+    }
+    const handlerUpdate = (_id: String, status: number) => {
+        updateStatus(_id, status)
     }
     if (error) return <div>Fali : {error}</div>
     if (!categorys) return <div>Loading...</div>
@@ -65,7 +68,11 @@ const Categories = (props: Props) => {
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     <div className="flex items-center">
-                                                        <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                        {item.status === 1 ? <button onClick={() => handlerUpdate(item._id, 0)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                        </button> : <button onClick={() => handlerUpdate(item._id, 1)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-red-400 mr-2" /> OFF
+                                                        </button>}
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
@@ -80,7 +87,7 @@ const Categories = (props: Props) => {
                                                                 <i className="material-icons-outlined text-base">edit</i>
                                                             </button>
                                                         </Link>
-                                                        <button onClick={() =>handlerRemove(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
+                                                        <button onClick={() => handlerRemove(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
                                                             <i className="material-icons-round text-base">delete_outline</i>
                                                         </button>
                                                     </div>
