@@ -4,7 +4,8 @@ const useProducts = () =>{
     const {data, error, mutate} = useSWR('/products')
     return{
         data,
-        error
+        error,
+        mutate
     }
 }
 

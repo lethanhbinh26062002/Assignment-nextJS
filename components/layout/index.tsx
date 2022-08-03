@@ -3,7 +3,7 @@ import Header from "../Header";
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div>
+        <div className="px-8">
             {children}
         </div>
     )
