@@ -1,23 +1,37 @@
 import Router from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { signup } from '../../api/auth';
+import { useRegister } from '../../hooks/useRegister';
+import { registerType } from '../../models/register';
 type Props = {
-  name: string,
-  address: string,
-  email: string,
-  password: string
+  // name: string,
+  // address: string,
+  // email: string,
+  // password: string
 }
-  const signUp = () => {
-    // const router = useRouter()
-    const {register,handleSubmit,formState:{errors}} = useForm<Props>();
-    const onSubmit:SubmitHandler<Props> =  async(user)=>{
-        const {data} = await signup(user)
-          if (data){
-            Router.push('/login');
-          }
-    }
+  // const signUp = () => {
+  //   // const router = useRouter()
+  //   const {register,handleSubmit,formState:{errors}} = useForm<Props>();
+  //   const onSubmit:SubmitHandler<Props> =  async(user)=>{
+  //       const {data} = await signup(user)
+  //         if (data){
+  //           Router.push('/login');
+  //         }
+  //   }
 
+  const register = (props: Props) => {
+    const {register,handleSubmit,formState:errors} = useForm<registerType>();
+    const {signup} = useRegister();
+    useEffect(() => {
+        (async () => {
+            const {data} = await signup();
+        })()
+    }, [])
+    const onSubmit:SubmitHandler<registerType> =  async(data)=>{
+        await signup(data)
+        Router.push('/login');
+    }
   
   return (
     <div>
@@ -139,4 +153,4 @@ type Props = {
   )
 }
 
-export default signUp
+export default register

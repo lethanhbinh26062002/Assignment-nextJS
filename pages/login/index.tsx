@@ -1,18 +1,21 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Router from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { signin } from '../../api/auth';
-type Props = {}
+import { Link } from 'react-router-dom';
+import { useRegister } from '../../hooks/useRegister';
+import { registerType } from '../../models/register';
 
+type Props = {}
 const login = () => {
   const { register, handleSubmit, formState: errors } = useForm();
-  // const navigate = useNavigate()
-  const onSubmit: SubmitHandler<Props> = async (user) => {
-    const { data } = await signin(user)
+  const { login , userRegister } = useRegister();
+  const onSubmit: SubmitHandler<registerType> = async (data) => {
+    await login(data)
     console.log(data)
     if (data)
-      localStorage.setItem("User", JSON.stringify(user))
-    Router.push('/')
+      localStorage.setItem("user", JSON.stringify(data))
+      Router.push('/');
   }
   return (
     <div>
@@ -43,10 +46,10 @@ const login = () => {
                           <a className="text-gray-300 hover:text-pink-700" href="#!">Forgot password?</a>
                         </div>
                         <div className="flex items-center justify-between pb-6">
-                          <p className="mb-0 mr-2 text-pink-200"> Don't have an account?</p>
-                          <a href='/register' className="inline-block px-6 py-2 border-2 border-pink-400 text-pink-400 font-medium text-xs leading-tight uppercase rounded hover:bg-pink-400 hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                          <p className="mb-0 mr-2 text-pink-200"> Dont have an account?</p>
+                          <Link href="https://" className="inline-block px-6 py-2 border-2 border-pink-400 text-pink-400 font-medium text-xs leading-tight uppercase rounded hover:bg-pink-400 hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
                             Sign-up
-                          </a>
+                          </Link>
                         </div>
                       </form>
                     </div>

@@ -7,7 +7,7 @@ export const useRegister = () => {
     const { data, error } = useSWR("/signup");
     const { mutate } = useSWRConfig();
 
-    const register = (user: registerType) => {
+    const userRegister = (user: registerType) => {
         const account = user;
         mutate("/register", async () => {
             const { data: user } = await signup(account);
@@ -24,7 +24,7 @@ export const useRegister = () => {
     return {
         data,
         error,
-        signup,
-        signin,
+        userRegister,
+        login,
     }
 }
