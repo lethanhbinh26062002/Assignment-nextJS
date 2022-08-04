@@ -1,24 +1,26 @@
 import Router from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { signin } from '../../api/auth';
+import { useRegister } from '../../hooks/useRegister';
+import { registerType } from '../../models/register';
 type Props = {
-  email: string,
-  password: string,
-  address: string,
-  name: string
 }
-
-const login = () => {
-  const { register, handleSubmit, formState: {errors}} = useForm<Props>();
-  // const navigate = useNavigate()
-  const onSubmit: SubmitHandler<Props> = async (user) => {
-    const {data} = await signin(user)
-    console.log(data)
-    if(data)
-    localStorage.setItem("user", JSON.stringify(user))
-    Router.push('/')
-  }
+  const login = () => {
+    const {register,handleSubmit,formState:errors} = useForm();
+    const {signin} = useRegister();
+    useEffect(() => {
+        (async () => {
+            const data = await signin();
+        })()
+    }, [])
+    const onSubmit:SubmitHandler<registerType> =  async(data)=>{
+        await signin(data)
+        console.log(data)
+          if(data)
+          // localStorage.setItem("user", JSON.stringify(user))
+        Router.push('/');
+    }
   return (
     <div>
         <section className="h-full gradient-form bg-gray-200 md:h-screen">
