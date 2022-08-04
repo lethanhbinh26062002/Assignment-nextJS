@@ -7,11 +7,11 @@ type Props = {}
 
 const Categories = (props: Props) => {
     const { data: categorys, error, removeCate,updateStatus} = useCategory();
-    const handlerRemove = (_id: String) => {
+    const handlerRemove = (_id: string) => {
         let result = confirm("Bạn có muốn xoá không ?")
         if (result) removeCate(_id)
     }
-    const handlerUpdate = (_id: String, status: number) => {
+    const handlerUpdate = (_id: string, status: number) => {
         updateStatus(_id, status)
     }
     if (error) return <div>Fali : {error}</div>

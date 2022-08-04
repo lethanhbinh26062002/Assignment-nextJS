@@ -16,6 +16,3 @@ export const read = async(id :String)=>{
 export const update = async(product :productType)=>{
     return instance.patch(`products/edit/${product._id}`,product)
 }
-export const updateSattus = async(id :String, status : number)=>{
-    return instance.patch(`products/${id}`, status)
-}

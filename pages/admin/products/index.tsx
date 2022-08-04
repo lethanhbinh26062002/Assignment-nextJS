@@ -5,13 +5,13 @@ import { useProduct } from '../../../hooks/useProduct'
 
 const Product = () => {
     const { data: products, error, removePro, updateStatus } = useProduct();
-    const handlerRemve = (_id: String) => {
+    const handlerRemve = (_id: string) => {
         let result = confirm("Bạn có muốn xoá không ?");
         if (result) {
             removePro(_id)
         }
     }
-    const handlerUpdate = (_id: String, status: number) => {
+    const handlerUpdate = (_id: string, status: number) => {
         updateStatus(_id, status)
     }
     if (!products) return <div>Loading...</div>
@@ -75,14 +75,12 @@ const Product = () => {
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    <div className="flex items-center">
-                                                        
+                                                    <div className="flex items-center">                                               
                                                         {item.status === 1 ? <button onClick={() => handlerUpdate(item._id, 0)}>
                                                             <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
                                                         </button> : <button onClick={() => handlerUpdate(item._id, 1)}>
                                                             <div className="h-2.5 w-2.5 rounded-full bg-red-400 mr-2" /> OFF
-                                                        </button>}
-                                                        
+                                                        </button>}  
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
