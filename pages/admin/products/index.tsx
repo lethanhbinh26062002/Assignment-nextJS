@@ -4,12 +4,15 @@ import AdminLayout from '../../../components/layout/admin'
 import { useProduct } from '../../../hooks/useProduct'
 
 const Product = () => {
-    const { data: products, error ,removePro} = useProduct();
-    const handlerRemve =(_id: String)=>{
+    const { data: products, error, removePro, updateStatus } = useProduct();
+    const handlerRemve = (_id: string) => {
         let result = confirm("Bạn có muốn xoá không ?");
-        if(result){
+        if (result) {
             removePro(_id)
         }
+    }
+    const handlerUpdate = (_id: string, status: number) => {
+        updateStatus(_id, status)
     }
     if (!products) return <div>Loading...</div>
     if (error) return <div>Error : {error}</div>
@@ -53,10 +56,10 @@ const Product = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products?.map((item :any,index : any) => {
+                                        {products?.map((item: any, index: any) => {
                                             return <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td className="p-4 w-4">
-                                                    {index+1}
+                                                    {index + 1}
                                                 </td>
                                                 <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                                                     <img className="w-10 h-10 rounded-full" src={item.image} />
@@ -72,8 +75,12 @@ const Product = () => {
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    <div className="flex items-center">
-                                                        <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                    <div className="flex items-center">                                               
+                                                        {item.status === 1 ? <button onClick={() => handlerUpdate(item._id, 0)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                        </button> : <button onClick={() => handlerUpdate(item._id, 1)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-red-400 mr-2" /> OFF
+                                                        </button>}  
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
@@ -88,7 +95,7 @@ const Product = () => {
                                                                 <i className="material-icons-outlined text-base">edit</i>
                                                             </button>
                                                         </Link>
-                                                        <button onClick={()=> handlerRemve(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
+                                                        <button onClick={() => handlerRemve(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
                                                             <i className="material-icons-round text-base">delete_outline</i>
                                                         </button>
                                                     </div>

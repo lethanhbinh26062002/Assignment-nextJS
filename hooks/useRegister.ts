@@ -1,6 +1,7 @@
 import useSWR, { useSWRConfig } from "swr";
-import { signup } from "../api/auth";
+import { signup, signin } from "../api/auth";
 import { registerType } from "../models/register";
+
 export const useRegister = () => {
 
     const { data, error } = useSWR("/signup");
@@ -13,9 +14,17 @@ export const useRegister = () => {
             return [...data, user];
         });
     };
+    const login = (user: registerType) => {
+        const account = user;
+        mutate("/login", async () => {
+            const { data: user } = await signin(account);
+            return [...data, user];
+        });
+    };
     return {
         data,
         error,
         signup,
+        signin,
     }
 }
