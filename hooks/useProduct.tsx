@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { create, read, remmove, update } from "../api/products";
+import { create, read, remmove, update } from "../api/product";
 import { productType } from "../models/product";
 
 export const useProduct = () => {
