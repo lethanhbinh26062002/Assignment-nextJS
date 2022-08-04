@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 import AdminLayout from '../../../components/layout/admin'
-import { useProduct } from '../../../hooks/useProduct'
+import { useProducts } from '../../../hooks/useProduct'
 
 const Product = () => {
-    const { data: products, error, removePro, updateStatus } = useProduct();
+    const { data: products, error, removePro, updateStatus } = useProducts();
     const handlerRemve = (_id: string) => {
         let result = confirm("Bạn có muốn xoá không ?");
         if (result) {

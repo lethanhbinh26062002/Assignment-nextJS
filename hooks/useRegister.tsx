@@ -1,30 +1,27 @@
-import useSWR, { useSWRConfig } from "swr";
-import { signup, signin } from "../api/auth";
-import { registerType } from "../models/register";
+import useSWR from "swr";
+import { signup, signin, list } from "../api/auth";
+import { loginType, registerType } from "../models/register";
 
 export const useRegister = () => {
-
-    const { data, error } = useSWR("/signup");
-    const { mutate } = useSWRConfig();
-
-    const userRegister = (user: registerType) => {
-        const account = user;
-        mutate("/register", async () => {
-            const { data: user } = await signup(account);
-            return [...data, user];
-        });
+    const { data, error, mutate } = useSWR("/users")
+    const signUp = async (user: registerType) => {
+        const item = await signup(user);
+        mutate([...data, item])
     };
-    const login = (user: registerType) => {
-        const account = user;
-        mutate("/login", async () => {
-            const { data: user } = await signin(account);
-            return [...data, user];
-        });
+    const signIn = async (user: registerType) => {
+        data.map(async (item: registerType) => {
+            console.log(data);
+            if (item.email === user.email) {
+                const dataLogin = await signin(user)
+                localStorage.setItem("UserLocal", JSON.stringify(item));
+                console.log("data login", item);
+            }
+        })
     };
     return {
         data,
         error,
-        userRegister,
-        login,
+        signUp,
+        signIn,
     }
 }

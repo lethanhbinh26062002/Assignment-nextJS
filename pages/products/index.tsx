@@ -1,5 +1,5 @@
 import React from 'react'
-import useProducts from '../../hooks/product';
+import { useProducts } from '../../hooks/useProduct';
 import { ProductType } from '../../types/ProductType';
 
 const ProductPage = () => {

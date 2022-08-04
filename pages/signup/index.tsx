@@ -1,36 +1,17 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Router from 'next/router';
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { signup } from '../../api/auth';
 import { useRegister } from '../../hooks/useRegister';
 import { registerType } from '../../models/register';
-type Props = {
-  // name: string,
-  // address: string,
-  // email: string,
-  // password: string
-}
-  // const signUp = () => {
-  //   // const router = useRouter()
-  //   const {register,handleSubmit,formState:{errors}} = useForm<Props>();
-  //   const onSubmit:SubmitHandler<Props> =  async(user)=>{
-  //       const {data} = await signup(user)
-  //         if (data){
-  //           Router.push('/login');
-  //         }
-  //   }
 
-  const register = (props: Props) => {
-    const {register,handleSubmit,formState:errors} = useForm<registerType>();
-    const {signup} = useRegister();
-    useEffect(() => {
-        (async () => {
-            const {data} = await signup();
-        })()
-    }, [])
-    const onSubmit:SubmitHandler<registerType> =  async(data)=>{
-        await signup(data)
-        Router.push('/login');
+  const register = () => {
+    const { signIn, signUp } = useRegister();
+    const { register, handleSubmit, formState: { errors } } = useForm<registerType>();
+    const onSubmit:SubmitHandler<registerType> =  async(user)=>{
+      const data = await signUp(user);
+      console.log("Client", user);
+      Router.push('/signin');
     }
   
   return (
@@ -43,7 +24,7 @@ type Props = {
             <div className="w-full  max-w-lg z-10 mb-20">
               <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">Reference site about Lorem Ipsum..</div>
               <div className="sm:text-sm xl:text-md text-gray-100 font-normal"> What is Lorem Ipsum Lorem Ipsum is simply dummy
-                text of the printing and typesetting industry Lorem Ipsum has been the industry's standard dummy text ever
+                text of the printing and typesetting industry Lorem Ipsum has been the industry`s standard dummy text ever
                 since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it
                 has?</div>
             </div>
@@ -86,7 +67,7 @@ type Props = {
                 <span className="text-gray-300 font-normal">or continue with</span>
                 <span className="h-px w-16 bg-gray-200" />
               </div>
-              <form className="w-full max-w-lg"  onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
                 <div className="flex flex-wrap -mx-3 mb-4">
                   <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-name">

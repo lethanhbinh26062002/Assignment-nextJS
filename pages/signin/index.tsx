@@ -9,13 +9,11 @@ import { registerType } from '../../models/register';
 type Props = {}
 const login = () => {
   const { register, handleSubmit, formState: errors } = useForm();
-  const { login , userRegister } = useRegister();
+  const { signIn , signUp } = useRegister();
   const onSubmit: SubmitHandler<registerType> = async (data) => {
-    await login(data)
-    console.log(data)
-    if (data)
-      localStorage.setItem("user", JSON.stringify(data))
-      Router.push('/');
+    const user = await signIn(data);
+    console.log("form data", data);
+    Router.push('/');
   }
   return (
     <div>
@@ -34,7 +32,7 @@ const login = () => {
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <p className="mb-4 text-pink-300">Please login to your account</p>
                         <div className="mb-4">
-                          <input {...register('email', { required: true })} type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email" />
+                          <input {...register('email', { required: true })} type="email" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email" />
                         </div>
                         <div className="mb-4">
                           <input {...register('password', { required: true })} type="password" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password" />
@@ -47,23 +45,14 @@ const login = () => {
                         </div>
                         <div className="flex items-center justify-between pb-6">
                           <p className="mb-0 mr-2 text-pink-200"> Dont have an account?</p>
-                          <Link href="https://" className="inline-block px-6 py-2 border-2 border-pink-400 text-pink-400 font-medium text-xs leading-tight uppercase rounded hover:bg-pink-400 hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                          {/* <Link to={'/signup'} className="inline-block px-6 py-2 border-2 border-pink-400 text-pink-400 font-medium text-xs leading-tight uppercase rounded hover:bg-pink-400 hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
                             Sign-up
-                          </Link>
+                          </Link> */}
                         </div>
                       </form>
                     </div>
                   </div>
                   <div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none" >
-                    {/* <div className="text-white px-4 py-6 md:p-12 md:mx-6">
-                      <h4 className="text-xl font-semibold mb-6">We are more than just a company</h4>
-                      <p className="text-sm">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.
-                      </p>
-                    </div> */}
                     <img src="https://assets.materialup.com/uploads/08479c66-7730-404b-aedd-235deb68180b/preview.png" alt="" />
                   </div>
                 </div>

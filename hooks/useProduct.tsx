@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { create, read, remmove, update } from "../api/product";
 import { productType } from "../models/product";
 
-export const useProduct = () => {
+export const useProducts = () => {
     const url = "/products"
     const { data, error, mutate } = useSWR(url)
     const createProduct = async(product : productType) =>{

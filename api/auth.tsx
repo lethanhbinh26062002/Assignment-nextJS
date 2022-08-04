@@ -1,9 +1,11 @@
 import instance from "./instance";
-import {registerType} from "../models/register"
 
-export const signup = (user: registerType) => {
+export const signup = (user: any) => {
     return instance.post("/signup",user);
 }
-export const signin = (user: registerType) => {
-    return instance.post("/login",user);
+export const signin = (user: any) => {
+    return instance.post("/signin",user);
+}
+export const list = async()=>{
+    return instance.get("/users")
 }
