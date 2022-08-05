@@ -52,8 +52,12 @@ const Users = () => {
                                             Status
                                         </th>
                                         <th scope="col" className="py-3 px-6">
+                                            Role
+                                        </th>
+                                        <th scope="col" className="py-3 px-6">
                                             Action
                                         </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,9 +68,9 @@ const Users = () => {
                                                     {index+1}
                                                 </td>
                                                 <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                                                <div className="p-8">
-                                                        <div className="text-base font-semibold">{item.name}</div>
-                                                    </div>
+                                                <div className="py-8">
+                                                    <div className="text-base font-semibold">{item.name}</div>
+                                                </div>
                                                 </th>
                                                 <td className="py-4 px-6">
                                                     <div className="">
