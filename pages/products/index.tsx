@@ -1,15 +1,19 @@
 import React from 'react'
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 import { useProducts } from '../../hooks/useProduct';
 import { ProductType } from '../../types/ProductType';
 
 const ProductPage = () => {
     const { data, error } = useProducts();
+    
     if (error) return <div>failed to load</div>;
     if (!data) return <div>loading...</div>
 
     return (
         <div className='w-[90%] mx-auto'>
-            <div className='search flex justify-between items-end'>
+            <Header />
+            <div className='search flex justify-between items-end mt-10'>
                 <div className='group navbar-products relative'>
                     <button className='lable inline-block w-[300px]
                     py-[5px] border-b-2 pl-[5px] flex justify-between items-center
@@ -53,7 +57,7 @@ const ProductPage = () => {
                     </form>
                 </div>
             </div>
-            <div className='product-list'>
+            <div className='product-list mb-10'>
                 <div className="bg-white">
                     <div className="w-full mx-auto lg:w-full">
                         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-3 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -111,6 +115,7 @@ const ProductPage = () => {
                 </div>
 
             </div>
+            <Footer />
         </div>
     )
 }
