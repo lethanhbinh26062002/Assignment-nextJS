@@ -6,7 +6,7 @@ type Props = {}
 const Header = (props: Props) => {
     return (
 
-        <nav className="bg-pink-300 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+        <nav className="bg-pink-300 border-gray-200 px-2 sm:px-4 py-2.5 rounded">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <a href="https://flowbite.com/" className="flex items-center">
                     <img src="https://img.vn/uploads/version/img24-png-20190726133727cbvncjKzsQ.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
