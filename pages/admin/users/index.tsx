@@ -4,13 +4,18 @@ import AdminLayout from '../../../components/layout/admin'
 import { useUser } from '../../../hooks/useUser';
 
 const Users = () => {
-    const { data: users, error, removeUser } = useUser();
+    const { data: users, error, removeUser, updateStatus, updateRole } = useUser();
     const handlerRemove =(_id: String)=>{
         let result = confirm("Bạn có muốn xoá không ?");
-        if(result){
-            removeUser(_id)
+        if(result) removeUser(_id)
         }
-    }
+        const handlerUpdate = (_id: string, status: number)=>{
+            updateStatus(_id, status)
+        }
+        const handlerUpdateRole = (_id: string, role: number)=>{
+            updateRole(_id, role)
+        }
+    
     if (!users) return <div>Loading...</div>
     if (error) return <div>Error : {error}</div>
     return (
@@ -53,7 +58,8 @@ const Users = () => {
                                 </thead>
                                 <tbody>
                                         {users?.map((item :any,index : any) => {
-                                            return <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            return (
+                                            <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td className="p-4 w-4">
                                                     {index+1}
                                                 </td>
@@ -74,7 +80,20 @@ const Users = () => {
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     <div className="flex items-center">
-                                                        <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                        {item.status === 1 ? <button onClick={() => handlerUpdate(item._id, 0)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                        </button> : <button onClick={() => handlerUpdate(item._id, 1)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-red-400 mr-2" /> OFF
+                                                        </button>}
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="flex items-center">
+                                                        {item.role === 1 ? <button onClick={() => handlerUpdateRole(item._id, 0)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-purple-400 mr-2" /> ADMIN
+                                                        </button> : <button onClick={() => handlerUpdateRole(item._id, 1)}>
+                                                            <div className="h-2.5 w-2.5 rounded-full bg-orange-400 mr-2" /> USER
+                                                        </button>}
                                                     </div>
                                                 </td>
                                                 <td className="py-4 px-6">
@@ -95,6 +114,7 @@ const Users = () => {
                                                     </div>
                                                 </td>
                                             </tr>
+                                            )
                                         })}
 
                                     </tbody>
@@ -105,6 +125,7 @@ const Users = () => {
             </main>
 
         </div >
+    
     )
 }
 
