@@ -1,8 +1,4 @@
 import React from 'react'
-import { Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import "swiper/css"
-import "swiper/css/pagination"
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Header from '../../components/Header'
