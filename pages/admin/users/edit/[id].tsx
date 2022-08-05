@@ -18,8 +18,8 @@ const EditUser = (props: Props) => {
     const { data, error } = useSWR(id ? `/users/${id}` : null);
     useEffect(() => {
         (async () => {
-            const category = await read(id)
-            reset(category)
+            const user = await read(id)
+            reset(user)
         })()
     }, [id])
     const onSubmit: SubmitHandler<userType> = async (data: userType) => {
