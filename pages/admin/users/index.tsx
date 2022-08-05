@@ -58,13 +58,13 @@ const Users = () => {
                                 </thead>
                                 <tbody>
                                         {users?.map((item :any,index : any) => {
-                                            return (
+                                            return ( 
                                             <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td className="p-4 w-4">
                                                     {index+1}
                                                 </td>
                                                 <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                                                <div className="">
+                                                <div className="p-8">
                                                         <div className="text-base font-semibold">{item.name}</div>
                                                     </div>
                                                 </th>
