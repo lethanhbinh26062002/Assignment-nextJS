@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useSWR from 'swr';
+import { read } from '../../../../api/user';
 import AdminLayout from '../../../../components/layout/admin'
 import { useUser } from '../../../../hooks/useUser';
 import { userType } from '../../../../models/userType';
@@ -10,16 +11,20 @@ type Props = {
 }
 
 const EditUser = (props: Props) => {
-    const { register, formState: errors, handleSubmit } = useForm();
+    const { register, formState: errors,reset, handleSubmit } = useForm();
     const router = useRouter();
     const { updateUser } = useUser();
     const {id}  = router.query
-    const { data, error } = useSWR(`/users/${id}`);
-    
-    const onSubmit: SubmitHandler<userType> = async (data:userType) => {
+    const { data, error } = useSWR(id ? `/users/${id}` : null);
+    useEffect(() => {
+        (async () => {
+            const category = await read(id)
+            reset(category)
+        })()
+    }, [id])
+    const onSubmit: SubmitHandler<userType> = async (data: userType) => {
         await updateUser(data);
         router.push('/admin/users')
-        
     }
     if (!data) return <div>Loading...</div>
     if (error) return <div>Error : {error}</div>
