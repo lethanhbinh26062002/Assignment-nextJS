@@ -1,15 +1,23 @@
 import Link from 'next/link'
 import React from 'react'
 import AdminLayout from '../../../components/layout/admin'
+import { useUser } from '../../../hooks/useUser';
 
-type Props = {}
-
-const Users = (props: Props) => {
+const Users = () => {
+    const { data: users, error, removeUser } = useUser();
+    const handlerRemove =(_id: String)=>{
+        let result = confirm("Bạn có muốn xoá không ?");
+        if(result){
+            removeUser(_id)
+        }
+    }
+    if (!users) return <div>Loading...</div>
+    if (error) return <div>Error : {error}</div>
     return (
         <div className="">
             <link
-	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-	rel="stylesheet"></link>
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet"></link>
             <AdminLayout> </AdminLayout>
             <main className="ml-60 pt-16 max-h-screen overflow-auto">
                 <div className="px-6 py-8">
@@ -30,7 +38,10 @@ const Users = (props: Props) => {
                                             Name
                                         </th>
                                         <th scope="col" className="py-3 px-6">
-                                            Phone
+                                            Email
+                                        </th>
+                                        <th scope="col" className="py-3 px-6">
+                                            Address
                                         </th>
                                         <th scope="col" className="py-3 px-6">
                                             Status
@@ -41,81 +52,52 @@ const Users = (props: Props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="p-4 w-4">
-                                            1
-                                        </td>
-                                        <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" />
-                                            <div className="pl-3">
-                                                <div className="text-base font-semibold">Neil Sims</div>
-                                                <div className="font-normal text-gray-500">neil.sims@flowbite.com</div>
-                                            </div>
-                                        </th>
-                                        <td className="py-4 px-6">
-                                            React Developer
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div className="flex items-center">
-                                                <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div>
-                                                <Link href="users/1">
-                                                    <button className="text-gray-400 hover:text-gray-100 mr-2">
-                                                        <i className="material-icons-outlined text-base">visibility</i>
-                                                    </button>
-                                                </Link>
-                                                <Link href="users/edit">
-                                                    <button className="text-gray-400 hover:text-blue-500 mx-2">
-                                                        <i className="material-icons-outlined text-base">edit</i>
-                                                    </button>
-                                                </Link>
-                                                <button className="text-gray-400 hover:text-red-500 ml-2">
-                                                    <i className="material-icons-round text-base">delete_outline</i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td className="p-4 w-4">
-                                            5
-                                        </td>
-                                        <th scope="row" className="flex items-center py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-4.jpg" />
-                                            <div className="pl-3">
-                                                <div className="text-base font-semibold">Leslie Livingston</div>
-                                                <div className="font-normal text-gray-500">leslie@flowbite.com</div>
-                                            </div>
-                                        </th>
-                                        <td className="py-4 px-6">
-                                            SEO Specialist
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div className="flex items-center">
-                                                <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2" /> OFF
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-6">
-                                            <div>
-                                                <Link href="users/1">
-                                                    <button className="text-gray-400 hover:text-gray-100 mr-2">
-                                                        <i className="material-icons-outlined text-base">visibility</i>
-                                                    </button>
-                                                </Link>
-                                                <Link href="users/edit">
-                                                    <button className="text-gray-400 hover:text-blue-500 mx-2">
-                                                        <i className="material-icons-outlined text-base">edit</i>
-                                                    </button>
-                                                </Link>
-                                                <button className="text-gray-400 hover:text-red-500 ml-2">
-                                                    <i className="material-icons-round text-base">delete_outline</i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                        {users?.map((item :any,index : any) => {
+                                            return <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                <td className="p-4 w-4">
+                                                    {index+1}
+                                                </td>
+                                                <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+                                                <div className="">
+                                                        <div className="text-base font-semibold">{item.name}</div>
+                                                    </div>
+                                                </th>
+                                                <td className="py-4 px-6">
+                                                    <div className="">
+                                                        <div className="text-base font-semibold">{item.email}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="">
+                                                        <div className="text-base font-semibold">{item.address}</div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="flex items-center">
+                                                        <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2" /> ON
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div>
+                                                        <Link href="users/1">
+                                                            <button className="text-gray-400 hover:text-gray-100 mr-2">
+                                                                <i className="material-icons-outlined text-base">visibility</i>
+                                                            </button>
+                                                        </Link>
+                                                        <Link href={`/admin/users/edit/${item._id}`}>
+                                                            <button className="text-gray-400 hover:text-blue-500 mx-2">
+                                                                <i className="material-icons-outlined text-base">edit</i>
+                                                            </button>
+                                                        </Link>
+                                                        <button onClick={()=> handlerRemove(item._id)} className="text-gray-400 hover:text-red-500 ml-2">
+                                                            <i className="material-icons-round text-base">delete_outline</i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        })}
+
+                                    </tbody>
                             </table>
                         </div>
                     </div>
