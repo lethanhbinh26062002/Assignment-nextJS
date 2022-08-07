@@ -6,22 +6,34 @@ import "swiper/css/pagination"
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Header from '../../components/Header'
-
+import Footer from '../../components/Footer'
+import { useForm } from 'react-hook-form'
+import { useCart } from '../../hooks/useCart'
 
 const Detail = () => {
+    const {createCartItem} = useCart();
     const router = useRouter()
     const { _id } = router.query
     const { data, error } = useSWR(_id ? `/products/${_id}` : null)
-    console.log(data);
-    
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = async (cart:any) =>{
+        const userLocal =  JSON.parse(localStorage.getItem('UserLocal') || '{}');
+        const user = userLocal._id
+        const quantity = cart.quantity
+        const product = _id
+        const new_data = ({product,user,quantity})
+        console.log(new_data);
+        await createCartItem(new_data);
+        
+    }
     if (!data) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
 
     return (
-        <div>
+        <div className='w-[90%] mx-auto'>
             <Header />
             <main id="main" className="container">
-                <div className="bg-white bg-center text-2xl md:text-[38px] uppercase text-pink-400 text-center mb-6 py-10">
+                <div className="bg-white bg-center text-2xl md:text-[38px] uppercase text-red-400 text-center mb-6 py-10">
                     {data.name}
                 </div>
 
@@ -30,10 +42,10 @@ const Detail = () => {
                         <div className="w-full lg:w-[40%] flex">
                             <div className="flex flex-wrap md:flex-nowrap gap-3 mb-4">
                                 <div className="w-full lg:w-[80%]">
-                                    <img src={data.image} className="p-4 border border-solid border-gray-900 object-cover h-96"/>
+                                    <img src={data.image} className="p-4 border border-solid border-gray-900 object-cover h-96" />
                                 </div>
                                 <div className="w-[20%]">
-                                    <img src={data.image} className="p-2 border border-solid border-gray-900 object-cover"/>
+                                    <img src={data.image} className="p-2 border border-solid border-gray-900 object-cover" />
                                 </div>
                             </div>
                         </div>
@@ -43,7 +55,7 @@ const Detail = () => {
                                     {data.name}
                                 </h3>
                                 <div className="flex items-center gap-8">
-                                    <span className="text-base lg:text-2xl text-pink-400 text-center font-bold">
+                                    <span className="text-base lg:text-2xl text-red-400 text-center font-bold">
                                         {data.price} VNĐ
                                     </span>
                                     {/* <a><span className="opacity-80">
@@ -54,41 +66,31 @@ const Detail = () => {
                                     {data.description}
                                 </span>
                             </div>
-                            <div className="border-y border-solid border-gray-300 py-4 grid grid-cols-4 gap-2">
-                                <div className='py-3'>
-                                    <div className="relative flex flex-row h-8 ">
-                                        <input type="number" defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="border-y border-solid border-gray-300 py-4 grid grid-cols-4 gap-2">
+                                    <div className='py-3'>
+                                        <div className="relative flex flex-row h-8 ">
+                                            <input {...register("quantity")} type="number" min={1} defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
+                                        </div>
                                     </div>
+                                    <button className="bg-red-300 text-white p-4 rounded-sm hover:bg-gray-400">
+                                        <i className="fa-solid fa-cart-shopping" />
+                                        <span className="uppercase">Đặt hàng nhanh</span>
+                                    </button>
                                 </div>
-                                <button className="bg-pink-300 text-white p-4 rounded-sm hover:bg-gray-400">
-                                    <i className="fa-solid fa-cart-shopping" />
-                                    <span className="uppercase">Đặt hàng nhanh</span>
-                                </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div className='font-bold border-b border-solid border-gray-200'>
 
                     </div>
-                    <div className="border-solid mb-2 py-1">
+                    <div className="border-solid mb-2 py-1 mx-10">
+                        <textarea className="border-stone-900" name="" id="" cols={100} rows={10}></textarea>
                         <div>
                             <button className="bg-pink-300 text-white py-2 px-3 rounded uppercase hover:bg-gray-400">
                                 Bình luận
                             </button>
-                            <div>
-
-                            </div>
                         </div>
-                    </div>
-                    <div className="flex justify-end gap-2 pb-32">
-                        <i className="fa-solid fa-star start" />
-                        <i className="fa-solid fa-star start" />
-                        <i className="fa-solid fa-star start" />
-                        <i className="fa-solid fa-star start" />
-                        <i className="fa-regular fa-star" />
-                        <span>4 |</span>
-                        <i className="fa-solid fa-star" />
-                        <span>444</span>
                     </div>
                     <h3 className="text-lg font-bold border-b border-solid border-gray-200 mb-8">
                         Sản phẩm khác
@@ -204,6 +206,7 @@ const Detail = () => {
                     </Swiper>
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }

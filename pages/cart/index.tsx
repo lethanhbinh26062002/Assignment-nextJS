@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import { useCart } from '../../hooks/useCart';
 
 type Props = {}
 
 const Cart = (props: Props) => {
+
+    const { data: cart, error } = useCart();
+    const [cartItem, setCartItem] = useState<any[]>([]);
+    const arr: React.SetStateAction<any[]> = []
+    cart?.map(async (item: any) => {
+        const user = JSON.parse(localStorage.getItem('UserLocal') || '{}');
+        if (item.user === user._id && item.status === 0) {
+            const newcart = await item
+            arr.push(newcart)
+            setCartItem(arr)
+        }
+    })
+
+    if (error) return <div>False : {error}</div>
+    if (!cart) return <div>Loading...</div>
     return (
-        <div>
+        <div className='w-[90%] mx-auto'>
             <style dangerouslySetInnerHTML={{ __html: "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')" }} />
             <style dangerouslySetInnerHTML={{ __html: "\n/*\nmodule.exports = {\n    plugins: [require('@tailwindcss/forms'),]\n};\n*/\n.form-radio {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  -webkit-print-color-adjust: exact;\n          color-adjust: exact;\n  display: inline-block;\n  vertical-align: middle;\n  background-origin: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  flex-shrink: 0;\n  border-radius: 100%;\n  border-width: 2px;\n}\n\n.form-radio:checked {\n  background-image: url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e\");\n  border-color: transparent;\n  background-color: currentColor;\n  background-size: 100% 100%;\n  background-position: center;\n  background-repeat: no-repeat;\n}\n\n@media not print {\n  .form-radio::-ms-check {\n    border-width: 1px;\n    color: transparent;\n    background: inherit;\n    border-color: inherit;\n    border-radius: inherit;\n  }\n}\n\n.form-radio:focus {\n  outline: none;\n}\n\n.form-select {\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0aec0'%3e%3cpath d='M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z'/%3e%3c/svg%3e\");\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  -webkit-print-color-adjust: exact;\n          color-adjust: exact;\n  background-repeat: no-repeat;\n  padding-top: 0.5rem;\n  padding-right: 2.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  font-size: 1rem;\n  line-height: 1.5;\n  background-position: right 0.5rem center;\n  background-size: 1.5em 1.5em;\n}\n\n.form-select::-ms-expand {\n  color: #a0aec0;\n  border: none;\n}\n\n@media not print {\n  .form-select::-ms-expand {\n    display: none;\n  }\n}\n\n@media print and (-ms-high-contrast: active), print and (-ms-high-contrast: none) {\n  .form-select {\n    padding-right: 0.75rem;\n  }\n}\n" }} />
+            <Header />
             <div className="min-w-screen min-h-screen bg-gray-50 py-5">
                 <div className="px-5">
                     <div className="mb-2">
@@ -21,18 +40,20 @@ const Cart = (props: Props) => {
                         <div className="-mx-3 md:flex items-start">
                             <div className="px-3 md:w-7/12 lg:pr-10">
                                 <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                    <div className="w-full flex items-center">
-                                        <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80" />
+                                    {cartItem?.map((cart: any) =>
+                                        <div key={cart._id} className="w-full flex items-center">
+                                            <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                                <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80" />
+                                            </div>
+                                            <div className="flex-grow pl-3">
+                                                <h6 className="font-semibold uppercase text-gray-600"></h6>
+                                                <p className="text-gray-400">{cart.quantity}</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold text-gray-600 text-xl">$210</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                                            </div>
                                         </div>
-                                        <div className="flex-grow pl-3">
-                                            <h6 className="font-semibold uppercase text-gray-600">Ray Ban Sunglasses.</h6>
-                                            <p className="text-gray-400">x 1</p>
-                                        </div>
-                                        <div>
-                                            <span className="font-semibold text-gray-600 text-xl">$210</span><span className="font-semibold text-gray-600 text-sm">.00</span>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                                 <div className="mb-6 pb-6 border-b border-gray-200">
                                     <div className="-mx-2 flex items-end justify-end">
@@ -134,6 +155,7 @@ const Cart = (props: Props) => {
                     </a>
                 </div>
             </div>
+            <Footer />
         </div>
 
     )

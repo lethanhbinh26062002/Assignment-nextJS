@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import useSWR from 'swr'
 import { list } from '../../../../api/category'
-import { read } from '../../../../api/products'
+import { read } from '../../../../api/product'
 import AdminLayout from '../../../../components/layout/admin'
-import { useProduct } from '../../../../hooks/useProduct'
+import { useProducts } from '../../../../hooks/useProduct'
 import { productType } from '../../../../models/product'
 type Props = {}
 
@@ -13,7 +13,7 @@ const EditProducts = (props: Props) => {
     const { register, formState: errors, reset, handleSubmit } = useForm();
     const [categorys, setCategorys] = useState<any[]>([]);
     const router = useRouter();
-    const { updateProduct } = useProduct();
+    const { updateProduct } = useProducts();
     const { id } = router.query
     // const { data, error } = useSWR(id ? `/products/${id}` : null);
     useEffect(() => {

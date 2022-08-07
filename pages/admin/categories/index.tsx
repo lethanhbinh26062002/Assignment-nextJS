@@ -14,7 +14,7 @@ const Categories = (props: Props) => {
     const handlerUpdate = (_id: string, status: number) => {
         updateStatus(_id, status)
     }
-    if (error) return <div>Fali : {error}</div>
+    if (error) return <div>False : {error}</div>
     if (!categorys) return <div>Loading...</div>
     return (
         <div className="">
