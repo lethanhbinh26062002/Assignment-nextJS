@@ -1,14 +1,14 @@
 import instance from "./instance";
 
-export const list = async()=>{
-    return instance.get("/cart")
+export const create_cart = (cart: any) => {
+    return instance.post(`/cart`,cart);
 }
-export const create = async (product: any)=>{
-    return instance.post(`/products/${product._id}`,product)
+export const list_cart = () => {
+    return instance.get(`/cart`);
 }
-export const remmove = async(id :String)=>{
-    return instance.delete(`/cart/${id}`)
+export const update_cart = async(id_u:string, id:string,product:any)=>{
+    return instance.patch(`/cart/${id_u}/${id}`,product);
 }
-export const update = async(_id: String , cart : any) => {
-    return instance.patch(`/cart/${_id}`,cart)
+export const delete_cart = async(id_u:string,id:string)=>{
+    return instance.delete(`/cart/${id_u},/${id}`)
 }

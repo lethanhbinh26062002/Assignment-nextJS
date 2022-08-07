@@ -1,15 +1,16 @@
 import { json } from "node:stream/consumers";
 import useSWR from "swr";
-import { create } from "../api/cart";
+import { create_cart } from "../api/cart";
 import { CartItem } from "../models/cartItem";
 
 export const useCart = () => {
-    const url = "/cart"
+    const url = `/cart`
     const { data, error, mutate } = useSWR(url)
-    const createCartItem = async(cartItem : CartItem) =>{
+
+    const createCartItem = async(cartItem : any) =>{
         // const data =  JSON.parse(localStorage.getItem('UserLocal') || '{}');
-        const item = await create(cartItem);
-        // mutate([...data,item])
+        const item = await create_cart(cartItem)
+        mutate([...data,item])
     };
     const updateCartItem = async(cartItem : CartItem) =>{
         // const pro = await update(product);

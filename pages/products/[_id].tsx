@@ -7,12 +7,25 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-
+import { useForm } from 'react-hook-form'
+import { useCart } from '../../hooks/useCart'
 
 const Detail = () => {
+    const {createCartItem} = useCart();
     const router = useRouter()
     const { _id } = router.query
     const { data, error } = useSWR(_id ? `/products/${_id}` : null)
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = async (cart:any) =>{
+        const userLocal =  JSON.parse(localStorage.getItem('UserLocal') || '{}');
+        const user = userLocal._id
+        const quantity = cart.quantity
+        const product = _id
+        const new_data = ({product,user,quantity})
+        console.log(new_data);
+        await createCartItem(new_data);
+        
+    }
     if (!data) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
 
@@ -53,11 +66,11 @@ const Detail = () => {
                                     {data.description}
                                 </span>
                             </div>
-                            <form action="">
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="border-y border-solid border-gray-300 py-4 grid grid-cols-4 gap-2">
                                     <div className='py-3'>
                                         <div className="relative flex flex-row h-8 ">
-                                            <input type="number" min={1} defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
+                                            <input {...register("quantity")} type="number" min={1} defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
                                         </div>
                                     </div>
                                     <button className="bg-red-300 text-white p-4 rounded-sm hover:bg-gray-400">
