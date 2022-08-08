@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { create, remove, update } from "../api/user";
+import { create, remove, update, read } from "../api/user";
 import { userType } from "../models/userType";
 
 export const useUser = () => {
@@ -21,11 +21,29 @@ export const useUser = () => {
         const newUserList = data.filter((item: any) => item._id !== users._id);
         mutate(newUserList);
     }
+    const updateStatus = async (_id: string, status: number) =>{
+        const users = await read(_id);
+        users.status = status
+        const dataUpdate = await update(users);
+        console.log(users);
+        const newUserList = data.map(item => item._id === users._id ? users : item)
+        mutate(newUserList)
+    }
+    const updateRole = async (_id: string, role: number) =>{
+        const users = await read(_id);
+        users.role = role
+        const dataUpdateRole = await update(users);
+        console.log(users);
+        const newUserList = data.map(item => item._id === users._id ? users : item)
+        mutate(newUserList)
+    }
     return {
         data,
         error,
         createUser,
         removeUser,
-        updateUser
+        updateUser,
+        updateStatus, 
+        updateRole
     }
 }
