@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import { getTotalItems } from '../../features/cart/cartSlice';
 import { useCart } from '../../hooks/useCart';
 
 type Props = {}
 
 const Cart = (props: Props) => {
-
-    const { data: cart, error } = useCart();
-    const [cartItem, setCartItem] = useState<any[]>([]);
-    const arr: React.SetStateAction<any[]> = []
-    cart?.map(async (item: any) => {
-        const user = JSON.parse(localStorage.getItem('UserLocal') || '{}');
-        if (item.user === user._id && item.status === 0) {
-            const newcart = await item
-            arr.push(newcart)
-            setCartItem(arr)
-        }
-    })
-
-    if (error) return <div>False : {error}</div>
-    if (!cart) return <div>Loading...</div>
+    const dispatch = useAppDispatch();
+    const data = useAppSelector(state => state.cart.items);
+    const total = useAppSelector(state => state.cart.total);
+    useEffect(() => {
+        dispatch(getTotalItems());
+    }, [data])
     return (
         <div className='w-[90%] mx-auto'>
             <style dangerouslySetInnerHTML={{ __html: "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')" }} />
@@ -40,17 +33,21 @@ const Cart = (props: Props) => {
                         <div className="-mx-3 md:flex items-start">
                             <div className="px-3 md:w-7/12 lg:pr-10">
                                 <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                    {cartItem?.map((cart: any) =>
+                                    {data?.map((cart: any) =>
                                         <div key={cart._id} className="w-full flex items-center">
                                             <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                                <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80" />
+                                                <img src={cart.image}/>
+                                            </div>
+                                            <div className="flex-grow pl-3">
+                                                <h6 className="font-semibold uppercase text-gray-600"></h6>
+                                                <p className="text-gray-400">{cart.name}</p>
                                             </div>
                                             <div className="flex-grow pl-3">
                                                 <h6 className="font-semibold uppercase text-gray-600"></h6>
                                                 <p className="text-gray-400">{cart.quantity}</p>
                                             </div>
                                             <div>
-                                                <span className="font-semibold text-gray-600 text-xl">$210</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                                                <span className="font-semibold text-gray-600 text-xl">${cart.price}</span><span className="font-semibold text-gray-600 text-sm"></span>
                                             </div>
                                         </div>
                                     )}
@@ -65,7 +62,7 @@ const Cart = (props: Props) => {
                                             <span className="text-gray-600">Subtotal</span>
                                         </div>
                                         <div className="pl-3">
-                                            <span className="font-semibold">$190.91</span>
+                                            <span className="font-semibold">${total}</span>
                                         </div>
                                     </div>
                                     <div className="w-full flex items-center">
@@ -73,7 +70,7 @@ const Cart = (props: Props) => {
                                             <span className="text-gray-600">Taxes (GST)</span>
                                         </div>
                                         <div className="pl-3">
-                                            <span className="font-semibold">$19.09</span>
+                                            <span className="font-semibold">$5</span>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +80,7 @@ const Cart = (props: Props) => {
                                             <span className="text-gray-600">Total</span>
                                         </div>
                                         <div className="pl-3">
-                                            <span className="font-semibold text-gray-400 text-sm">AUD</span> <span className="font-semibold">$210.00</span>
+                                            <span className="font-semibold text-gray-400 text-sm">AUD</span> <span className="font-semibold">${total +5}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import "swiper/css"
@@ -7,24 +7,24 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import { useForm } from 'react-hook-form'
-import { useCart } from '../../hooks/useCart'
+import { useAppDispatch } from '../../app/hooks'
+import { addItem } from '../../features/cart/cartSlice'
 
 const Detail = () => {
-    const {createCartItem} = useCart();
+    const dispatch = useAppDispatch();
+    const [quantity, setQuantity] = useState<number>(1);
     const router = useRouter()
     const { _id } = router.query
     const { data, error } = useSWR(_id ? `/products/${_id}` : null)
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = async (cart:any) =>{
-        const userLocal =  JSON.parse(localStorage.getItem('UserLocal') || '{}');
-        const user = userLocal._id
-        const quantity = cart.quantity
-        const product = _id
-        const new_data = ({product,user,quantity})
-        console.log(new_data);
-        await createCartItem(new_data);
-        
+    const addItemToCart = () => {
+        dispatch(addItem({
+            _id : data?._id,
+            name: data?.name,
+            image : data?.image,
+            price : data?.price,
+            quantity: quantity
+        }));
+        // alert("Thêm thành công.")
     }
     if (!data) return <div>Loading...</div>;
     if (error) return <div>Error</div>;
@@ -66,14 +66,16 @@ const Detail = () => {
                                     {data.description}
                                 </span>
                             </div>
-                            <form onSubmit={handleSubmit(onSubmit)}>
+                            <form >
                                 <div className="border-y border-solid border-gray-300 py-4 grid grid-cols-4 gap-2">
                                     <div className='py-3'>
                                         <div className="relative flex flex-row h-8 ">
-                                            <input {...register("quantity")} type="number" min={1} defaultValue={1} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
+                                            <input  type="number" min={1} defaultValue={quantity} onChange={(e) =>{
+                                            setQuantity(+e.target.value)
+                                        }} className="w-44 rounded text-center text-gray-700 border -2 border-pink-300 bg-gray-100 outline-none focus:outline-none hover:text-black focus:text-black" />
                                         </div>
                                     </div>
-                                    <button className="bg-red-300 text-white p-4 rounded-sm hover:bg-gray-400">
+                                    <button onClick={()=> addItemToCart()} className="bg-red-300 text-white p-4 rounded-sm hover:bg-gray-400">
                                         <i className="fa-solid fa-cart-shopping" />
                                         <span className="uppercase">Đặt hàng nhanh</span>
                                     </button>
